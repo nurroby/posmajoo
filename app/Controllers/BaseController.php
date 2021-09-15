@@ -45,13 +45,10 @@ class BaseController extends Controller
 	protected function isAdmin()
 	{
 		$userId = $this->session->get('userId');
-
 		if (!isset($userId) || $userId == null || $userId == '') {
 			return false;
 		} else {
-			$token_exp = $this->session->get('token_exp');
-
-			if(empty($token_exp) || strtotime(date('Y-m-d H:i:s')) >= strtotime($token_exp)) {
+			if($this->session->get('role')!=='admin') {
 				return false;
 			}
 			return true;
