@@ -40,4 +40,9 @@ class Validation
     //--------------------------------------------------------------------
     // Rules
     //--------------------------------------------------------------------
+
+    public $loginadmin = [
+        'username' => 'required|alpha_numeric|min_length[5]|max_length[20]',
+        'password' => 'required|min_length[8]|max_length[20]'
+    ];
 }
