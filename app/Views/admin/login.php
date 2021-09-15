@@ -22,18 +22,18 @@
                             </div>
                             <div class="card-body">
                                 <p class="login-box-msg">Sign in to start your session</p>
-
-                                <form action="<?= base_url().'/admin/auth'?>" method="post">
+                                <form method="post">
                                     <div class="input-group mb-3">
-                                        <input type="username" class="form-control" name="username" placeholder="username" required>
+                                        <input type="username" class="form-control" name="username" value="<?= set_value('username');?>" placeholder="username" required>
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <span class="fas fa-user"></span>
                                             </div>
                                         </div>
+
                                     </div>
                                     <div class="input-group mb-3">
-                                        <input type="password" class="form-control" name="password" placeholder="Password" required>
+                                        <input type="password" class="form-control" name="password" value="<?= set_value('password');?>" placeholder="Password" required>
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <span class="fas fa-lock"></span>

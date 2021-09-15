@@ -15,12 +15,18 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.16.3/dist/sweetalert2.all.min.js" integrity="sha256-dJtc/tC56+CUFep+WX+wmcSWBPPjSqOSH3Ft+N8YXyc=" crossorigin="anonymous"></script>
 <script type="text/javascript">
 
-  <?php $error = $_SESSION['errors'] ?? null; if ($error): ?>
-      const Toast = Swal.mixin({
-        toast: true, position: 'top-end', showConfirmButton: false, timer: 5000
-      });
-      Toast.fire({ type: 'error', title: '<?= $error; ?>' })
-  <?php endif; ?>    
+    const Toast = Swal.mixin({ toast: true, position: 'top-end', showConfirmButton: false, timer: 3000 });
+    <?php $error = $_SESSION['errors'] ?? null; if ($error): ?>
+        Toast.fire({ type: 'error', title: '<?= $error; ?>' })
+    <?php endif; ?>
+    <?php $success = $_SESSION['success'] ?? null; if ($success): ?>
+        Toast.fire({ type: 'success', title: '<?= $success; ?>' })
+    <?php endif; ?>
+    <?php $redirect = $_SESSION['redirect'] ?? null; if ($redirect): ?>
+        window.setTimeout(function() {
+            window.location.href = '<?= $redirect;?>';
+        }, 3500);
+    <?php endif; ?>
     function maintenance()
     {
         swal.fire({ 
