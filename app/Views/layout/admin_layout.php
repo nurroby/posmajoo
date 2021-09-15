@@ -25,7 +25,7 @@
 			<!-- Right navbar links -->
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item">
-					<a class="nav-link btn btn-outline-success rounded-full" href="#" role="button">
+					<a class="nav-link btn btn-outline-success rounded-full" href="<?= base_url().'/admin/logout'?>" role="button">
 						<i class="fas fa-lock"></i> Logout
 					</a>
 				</li>
