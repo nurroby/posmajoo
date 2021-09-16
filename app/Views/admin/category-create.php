@@ -29,7 +29,7 @@
                         <form method="POST" enctype="multipart/form-data">
                             <div class="row">
                                 <div class="form-group col-md-8 col-xs-12">
-                                    <label>Nama</label>
+                                    <label>Name</label>
                                     <input type="text" class="form-control" name="name" value="<?= set_value('name');?>" required>
                                 </div>
                                 <div class="form-group col-md-12 col-xs-12">
