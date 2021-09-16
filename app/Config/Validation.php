@@ -45,4 +45,23 @@ class Validation
         'username' => 'required|alpha_numeric|min_length[5]|max_length[20]',
         'password' => 'required|min_length[8]|max_length[20]'
     ];
+    public $createCategory = [        
+        'name' => 'required',
+        'description' => 'required',
+        'image' => [
+            'required',
+            'uploaded[image]',
+            'mime_in[image,image/jpg,image/jpeg,image/gif,image/png]',
+            'max_size[image,4096]',
+        ]
+    ];
+    public $editCategory = [        
+        'name' => 'alpha_numeric|min_length[5]|max_length[20]',
+        'description' => 'alpha_numeric|min_length[5]|max_length[200]',
+        'image' => [
+            'uploaded[image]',
+            'mime_in[image,image/jpg,image/jpeg,image/gif,image/png]',
+            'max_size[image,4096]',
+        ]
+    ];
 }

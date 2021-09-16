@@ -26,19 +26,25 @@
                         <div class="card-tools"></div>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="<?= base_url('api/category/processAdd') ?>">
+                        <form method="POST" enctype="multipart/form-data">
                             <div class="row">
                                 <div class="form-group col-md-8 col-xs-12">
                                     <label>Nama</label>
-                                    <input type="text" class="form-control" name="name" required>
-                                </div>
-                                <div class="form-group col-md-4 col-xs-12">
-                                    <label>Image</label>
-                                    <input type="file" class="form-control" name="image" required>
+                                    <input type="text" class="form-control" name="name" value="<?= set_value('name');?>" required>
                                 </div>
                                 <div class="form-group col-md-12 col-xs-12">
                                     <label>Description</label>
-                                    <textarea id="summernote" class="form-control" name="description" required></textarea>
+                                    <textarea id="summernote" class="form-control" name="description" required><?= set_value('description');?></textarea>
+                                </div>
+                                <div class="form-group col-md-4 col-xs-12">
+                                    <label>Image</label>
+                                    <input type="file" class="form-control" id="fileUpload" name="image" onchange="uploadFile();" accept="image/*" required>
+                                    <div class="mt-2 progress">
+                                        <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4 col-xs-12">
+                                    <img src="" alt="Image preview" id="preview-image" class="d-none img-thumbnail">
                                 </div>
                             </div>
                             <div class="row mt-3">
@@ -61,5 +67,33 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+<script> 
 
+    function uploadFile() {
+        document.getElementById('progressBar').value = 0;
+        var file = document.getElementById("fileUpload").files[0];
+        // alert(file.name+" | "+file.size+" | "+file.type);
+        var formdata = new FormData();
+        formdata.append("fileUpload", file);
+        var ajax = new XMLHttpRequest();
+        ajax.upload.addEventListener("progress", progressHandler, false);
+        ajax.addEventListener("load", completeHandler, false);
+        ajax.open("POST",'test.php');
+        ajax.send(formdata);
+    }
+
+    function progressHandler(event) {
+        var percent = (event.loaded / event.total) * 100;
+        document.getElementById('progressBar').style.width = Math.round(percent).toString() + "%";
+        document.getElementById('progressBar').innerText = Math.round(percent).toString() + "%";
+    }
+    function completeHandler(event) {
+        var output = document.getElementById('preview-image');
+            output.classList.remove("d-none");  
+            output.src = URL.createObjectURL(document.getElementById("fileUpload").files[0]);
+            output.onload = function() {
+                URL.revokeObjectURL(output.src)
+            }
+    }
+</script>
 <?= $this->endSection() ?>

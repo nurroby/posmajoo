@@ -160,7 +160,7 @@
                     render: function (data, type, row) {
                         return `
                         <div class="d-flex justify-content-start">
-                        <button class="btn btn-sm btn-secondary mx-1" data-toggle="tooltip" onclick="window.location.href = '<?= base_url('admin/category/edit/') ?>${data}'" title="Edit"><i class="fas fa-edit"></i></button>&nbsp
+                        <button class="btn btn-sm btn-secondary mx-1" data-toggle="tooltip" onclick="window.location.href = '<?= base_url('admin/category/edit/') ?>/${data}'" title="Edit"><i class="fas fa-edit"></i></button>&nbsp
                         <button class="btn btn-sm btn-danger btn-delete mx-1" data-toggle="tooltip" data-tab="bundle" data-id="${data}" title="Hapus"><i class="fas fa-trash"></i></button>
                         </div>
                         `

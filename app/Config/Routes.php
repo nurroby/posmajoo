@@ -42,7 +42,8 @@ $routes->group('admin', function ($routes) {
     $routes->add('logout', 'Admin\Home::logout');
     $routes->add('category', 'Admin\Category::index');
     $routes->add('category/add', 'Admin\Category::create');
-    $routes->add('category/edit', 'Admin\Category::update');
+    $routes->add('product', 'Admin\Product::index');
+    $routes->add('product/add', 'Admin\Product::create');
 });
 
 $routes->group('users', function ($routes) {
