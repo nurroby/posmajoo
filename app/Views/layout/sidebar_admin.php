@@ -11,7 +11,7 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="info">
-                <a href="#" class="d-block">Alexander Pierce</a>
+                <a href="#" class="d-block"></a>
             </div>
         </div>
 
@@ -21,7 +21,7 @@
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="<?= base_url() ?>/admin" class="nav-link" style="cursor:not-allowed" onclick="maintenance();">
+                    <a href="<?= base_url() ?>/admin" class="nav-link">
                         <i class="nav-icon fas fa-home"></i>
                         <p>
                             Dashboard
@@ -38,7 +38,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= base_url() ?>admin/product" class="nav-link" style="cursor:not-allowed" onclick="maintenance();">
+                    <a href="<?= base_url() ?>/admin/product" class="nav-link"">
                         <i class="nav-icon fas fa-box"></i>
                         <p>
                             Master Produk
@@ -46,7 +46,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= base_url() ?>admin/users" class="nav-link" style="cursor:not-allowed" onclick="maintenance();">
+                    <a href="#" class="nav-link" style="cursor:not-allowed" onclick="maintenance();">
                         <i class="nav-icon fas fa-address-book"></i>
                         <p>
                             Master User
@@ -55,7 +55,7 @@
                 </li>
                 <li class="nav-header">TRANSAKSI</li>
                 <li class="nav-item">
-                    <a href="<?= base_url() ?>admin/order" class="nav-link">
+                    <a href="#" class="nav-link" style="cursor:not-allowed" onclick="maintenance();">
                         <i class="fas fa-shopping-basket nav-icon"></i>
                         <p>Pesanan</p>
                     </a>
