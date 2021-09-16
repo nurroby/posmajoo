@@ -1,14 +1,79 @@
-// Copyright 2021 Nurroby Wahyu Saputra
-// 
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// 
-//     http://www.apache.org/licenses/LICENSE-2.0
-// 
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+<?php
 
+namespace App\Models;
+
+use CodeIgniter\Model;
+
+class ProductModel extends Model
+{
+    protected $table      = 'product';
+    protected $primaryKey = 'id';
+
+    protected $returnType = 'array';
+    protected $useSoftDeletes = true;
+
+    protected $allowedFields = ['name', 'description', 'price', 'image','deleted_at'];
+
+    protected $column_order = array('id', 'name', 'price', 'created_at');
+    protected $column_search = array('id', 'name', 'description');
+    protected $order = array('created_at' => 'desc');
+    protected $db;
+    protected $dt;
+    /**
+     * Datatables Start
+     */
+    const ORDERABLE = [
+        1 => 'created_at',
+        2 => 'price',
+        3 => 'name',
+        4 => 'category_id',
+    ];
+
+    public $orderable = ['created_at', 'price', 'name', 'category_id'];
+    
+
+    public function getAllProductDataTable($data)
+    {
+        $db      = \Config\Database::connect();
+        $builderTotal = $db->table('product p');
+        $builderFiltered = $db->table('product p');
+        $builder = $db->table('product p');
+        $product = $builder->select('p.id as id, p.category_id as category_id, p.name as name, c.name as category, p.description as description, p.price as price, p.updated_at as updated_at')
+            ->join('category c', 'p.category_id = c.id', 'left');
+
+        if ($data['search']['value'] != '') {
+            $product->where('(p.name LIKE "%' . $data['search']['value'] . '%" OR p.description LIKE "%' . $data['search']['value'] . '%" AND p.deleted_at  = NULL)');
+            $builderFiltered->where('(p.name LIKE "%' . $data['search']['value'] . '%" OR p.description LIKE "%' . $data['search']['value'] . '%" AND p.deleted_at = NULL)');
+        }
+
+        $product->where('p.deleted_at', null);
+        $builderFiltered->where('p.deleted_at', null);
+
+        if ($data['order']) {
+            if ($data['order'][0]['column'] == 3) {
+                $product->orderBy('p.name', $data['order'][0]['dir']);
+            }
+        }
+
+        $product->orderBy('p.updated_at', 'desc');
+        $builderFiltered->orderBy('p.updated_at', 'desc');
+
+        if ($data['length'] != -1) {
+            $product->limit($data['length'], !isset($data['start']) ? 0 : intval($data['start']));
+        }
+
+        $productData = array(
+            'start' => $data['start'],
+            'draw' => $data['draw'],
+            'recordsTotal' => $builderTotal->countAllResults(),
+            'recordsFiltered' => $builderFiltered->countAllResults(),
+            'data' => $product->get()->getResultArray()
+        );
+        return $productData;
+    }
+    /**
+     * Datatables End
+     */
+
+
+}
