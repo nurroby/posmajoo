@@ -46,8 +46,8 @@ class Validation
         'password' => 'required|min_length[8]|max_length[20]'
     ];
     public $createCategory = [        
-        'name' => 'required',
-        'description' => 'required',
+        'name' => 'required|alpha_numeric_space|min_length[5]|max_length[20]',
+        'description' => 'required|min_length[5]|max_length[1000]',
         'image' => [
             'required',
             'uploaded[image]',
@@ -56,8 +56,30 @@ class Validation
         ]
     ];
     public $editCategory = [        
-        'name' => 'alpha_numeric|min_length[5]|max_length[20]',
-        'description' => 'alpha_numeric|min_length[5]|max_length[200]',
+        'name' => 'alpha_numeric_space|min_length[5]|max_length[20]',
+        'description' => 'min_length[5]|max_length[1000]',
+        'image' => [
+            'mime_in[image,image/jpg,image/jpeg,image/gif,image/png]',
+            'max_size[image,4096]',
+        ]
+    ];
+    public $createProduct = [        
+        'name' => 'required|alpha_numeric_space|min_length[5]|max_length[50]',
+        'category_id' => 'required|numeric',
+        'price' => 'required|numeric',
+        'description' => 'required|min_length[5]|max_length[1000]',
+        'image' => [
+            'required',
+            'uploaded[image]',
+            'mime_in[image,image/jpg,image/jpeg,image/gif,image/png]',
+            'max_size[image,4096]',
+        ]
+    ];
+    public $editProduct = [        
+        'name' => 'alpha_numeric_space|min_length[5]|max_length[50]',
+        'category_id' => 'numeric',
+        'price' => 'numeric',
+        'description' => 'min_length[5]|max_length[1000]',
         'image' => [
             'uploaded[image]',
             'mime_in[image,image/jpg,image/jpeg,image/gif,image/png]',
