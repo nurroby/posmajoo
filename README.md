@@ -4,9 +4,10 @@
 
 ### how to use
 
-- import DB
 - `> composer require`
+- `> php spark db:create posmajoo`
 - change emv.example to .env
+- `> php spark migrate`
 - `> php spark serve`
 - admin @ /admin [admin:password]
 
