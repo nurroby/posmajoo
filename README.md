@@ -20,7 +20,7 @@
 
 ___
 
-#### todo:
+#### todo release 0.1.0:
 
 - [x] Add admin Panel
 - [x] Add maintenance notif for several feature
