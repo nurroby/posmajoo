@@ -24,6 +24,10 @@ class Product extends Migration
 				'type'           => 'VARCHAR',
 				'constraint'     => '20'
 			],
+			'price'  => [
+				'type'           => 'BIGINT',
+				'constraint'     => '20'
+			],
 			'description'        => [
 				'type'           => 'TEXT',
 			],
