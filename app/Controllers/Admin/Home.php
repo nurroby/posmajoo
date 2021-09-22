@@ -3,7 +3,12 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
+
 use App\Models\AdminModel;
+use App\Models\OrderModel;
+use App\Models\UserModel;
+use App\Models\ProductModel;
+use App\Models\CategoryModel;
 
 class Home extends BaseController
 {
@@ -20,7 +25,28 @@ class Home extends BaseController
             $this->session->setFlashdata('errors', 'Session Expired, silakan login ulang');
             return redirect()->to(base_url().'/admin/login');
         }
-        $data = ["page_title"=>"add category","page_type"=>"dashboard"];
+        $_users = new UserModel();
+        $_order = new OrderModel();
+        $_product = new ProductModel();
+        $_category = new CategoryModel();
+        $data = [
+            "page_title"=>"add category",
+            "page_type"=>"dashboard",
+            "count"=>[
+                "order"=>$_order->countAllResults(),
+                "user"=>$_users->countAllResults(),
+                "product"=>$_product->countAllResults(),
+                "category"=>$_category->countAllResults(),
+            ],
+            "latest"=>[
+                "order"=>$_order->select('id as order_id, user_id, total_price, status')
+                                ->orderBy('created_at','desc')
+                                ->findAll(5,0),
+                "product"=>$_product->select('id as product_id, name, description, price, image')
+                                    ->orderBy('created_at','desc')
+                                    ->findAll(5,0),
+            ]
+        ];
         return view('admin/dashboard',$data);
     }
 

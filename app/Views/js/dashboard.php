@@ -1,0 +1,1 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.28.3/apexcharts.min.js" integrity="sha512-n0iZePnfJ2CmatQIAts4fCqIFLb+SDlIx5sKrP6ouX3mnx/abeachgrt/WGzyL6kc3X2o11rBegiQBCy/ezWgA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

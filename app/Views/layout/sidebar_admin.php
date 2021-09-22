@@ -28,12 +28,12 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-header">DATA MASTER</li>
+                <li class="nav-header">MASTER DATA</li>
                 <li class="nav-item">
                     <a href="<?= base_url() ?>/admin/category" class="nav-link">
                         <i class="nav-icon fas fa-tag"></i>
                         <p>
-                            Master Kategori
+                            Master Categories
                         </p>
                     </a>
                 </li>
@@ -41,7 +41,7 @@
                     <a href="<?= base_url() ?>/admin/product" class="nav-link"">
                         <i class="nav-icon fas fa-box"></i>
                         <p>
-                            Master Produk
+                            Master Products
                         </p>
                     </a>
                 </li>
@@ -49,7 +49,7 @@
                     <a href="#" class="nav-link" style="cursor:not-allowed" onclick="maintenance();">
                         <i class="nav-icon fas fa-address-book"></i>
                         <p>
-                            Master User
+                            Master Users
                         </p>
                     </a>
                 </li>
@@ -57,7 +57,7 @@
                 <li class="nav-item">
                     <a href="#" class="nav-link" style="cursor:not-allowed" onclick="maintenance();">
                         <i class="fas fa-shopping-basket nav-icon"></i>
-                        <p>Pesanan</p>
+                        <p>Orders</p>
                     </a>
                 </li>
 
