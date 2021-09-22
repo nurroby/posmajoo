@@ -32,6 +32,14 @@ class Category extends BaseApi
             } else {
                 $respond = array('respond' => false, 'status' => 404, 'message' => 'Failed To Retrieve Category Data. Category ID Not Found');
             }
+        }elseif( isset($data['search']) && !isset($data['draw']) ){
+            $categoryData = $category->select("category.*")->where("category.name LIKE '%".$data['search']."%'")->findAll();
+            $respond = array(
+                'respond'       => true,
+                'status'        => 200,
+                'message'       => 'Succesfully Retrieve Category Data',
+                'Category'       => $categoryData,
+            );
         } elseif (isset($data['draw'])) {
             $categoryData = $category->getAllCategoryDataTable($data);
             $respond = array(
