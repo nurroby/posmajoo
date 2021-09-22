@@ -14,3 +14,5 @@
 - mysql 8
 - CSS3 [BS-4] 
 - js [jquery 4.3.1]
+
+`also check dev branch for dev progress`
