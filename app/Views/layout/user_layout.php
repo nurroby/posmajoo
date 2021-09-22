@@ -16,10 +16,10 @@
     </style>
 </head>
 
-<body class="hold-transition layout-top-nav">
+<body class="hold-transition layout-navbar-fixed layout-top-nav">
     <div class="wrapper">
         <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand-md navbar-dark navbar-light">
+        <nav class="main-header navbar navbar-expand-md navbar-light elevation-1 majoo-bg">
             <div class="container">
 
                 <button class="navbar-toggler order-1" type="button" data-toggle="collapse"
@@ -32,7 +32,9 @@
                     <!-- Left navbar links -->
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a href="<?= base_url();?>/home" class="nav-link">Majoo Teknologi Indonesia</a>
+                            <a href="<?= base_url();?>/home" class="nav-brand">
+                                <img src="https://majoo.id/assets/img/main-logo.png" alt="Majoo Teknologi Indonesia" class="brand-image">
+                            </a>
                         </li>
                     </ul>
                 </div>
