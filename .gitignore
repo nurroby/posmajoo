@@ -46,6 +46,27 @@ $RECYCLE.BIN/
 Vagrantfile
 
 #-------------------------
+# Public Files
+#-------------------------
+
+public/uploads/categories/img/*
+public/uploads/categories/thumb/*
+!public/uploads/index.html
+!public/uploads/categories/index.html
+!public/uploads/categories/img/index.html
+!public/uploads/categories/img/img.png
+!public/uploads/categories/thumb/index.html
+!public/uploads/categories/thumb/thumb.png
+
+public/uploads/products/img/*
+public/uploads/products/thumb/*
+!public/uploads/products/index.html
+!public/uploads/products/img/index.html
+!public/uploads/products/img/img.png
+!public/uploads/products/thumb/index.html
+!public/uploads/products/thumb/thumb.png
+
+#-------------------------
 # Temporary Files
 #-------------------------
 writable/cache/*
