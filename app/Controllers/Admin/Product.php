@@ -12,6 +12,8 @@ class Product extends BaseController
     {
         helper('form');
         $this->validating = \Config\Services::validation();
+        $this->thumbs = \Config\Services::image();
+        $this->_folder = 'public/uploads/products';
     }
 
     public function index()
@@ -27,28 +29,33 @@ class Product extends BaseController
     
     public function create()
     {
-        $data = ["page_title"=>"add product","page_type"=>"form"];
+        $data = ["page_title"=>"Add Product","page_type"=>"form"];
         if ($this->request->getPost()): 
             $file = $this->request->getFile('image');
             $input = [
                 'name' => $this->request->getPost('name'),
+                'category_id' => $this->request->getPost('category_id'),
                 'description' => $this->request->getPost('description'),
-                'image' => $file->getClientName()
+                'price' => $this->request->getPost('price'),
+                'image' => implode('-',explode(' ',$this->request->getPost('name'))).'-'.$file->getRandomName()
             ]; 
             
-            if(!$this->validating->run($input,'addProduct')):
+            if(!$this->validating->run($input,'createProduct')):
                 array_push($data,['validation' => $this->validating->getErrors()]);
                 foreach($this->validating->getErrors() as $error ):
                     $this->session->setFlashdata('errors', $error); 
                 endforeach;
                 return view('admin/product-create',$data);
             endif;
-
-            if(!$file->move(WRITEPATH . 'uploads'))
-            {
-                $this->session->setFlashdata('errors', 'Failed to upload image');
-                return view('admin/product-create',$data);
-            }
+            if($this->thumbs->withFile($file)
+                        ->fit(100, 100, 'center')
+                        ->save(ROOTPATH.$this->_folder.'/thumb/'.$input['image'])):
+                if(!$file->move(ROOTPATH.$this->_folder.'/img/',$input['image']))
+                {
+                    $this->session->setFlashdata('errors', 'Failed to upload image');
+                    return view('admin/product-create',$data);
+                }
+            endif;
             $tables = new ProductModel();            
             if($tables->save($input)) {
                 $this->session->setFlashdata('success', "Successfully insert data");
@@ -70,8 +77,16 @@ class Product extends BaseController
         if (!empty($this->request->getPost())): 
             $input = [];
                 if($this->request->getPost('name')): $input['name'] = $this->request->getPost('name'); endif;
-                if($this->request->getPost('description')): $input['description'] = $this->request->getPost('name') ; endif;
-                if($this->request->getFile('image')): $input['name'] = $this->request->getPost('name') ; endif;
+                if($this->request->getPost('category_id')): $input['category_id'] = $this->request->getPost('category_id'); endif;
+                if($this->request->getPost('price')): $input['price'] = $this->request->getPost('price'); endif;
+                if($this->request->getPost('description')): $input['description'] = $this->request->getPost('description') ; endif;
+                if($this->request->getFile('image')):
+                    if($this->request->getPost('name')):
+                        $input['image'] = implode('-',explode(' ',$this->request->getPost('name'))).'-'.$file->getRandomName();
+                    else:
+                        $input['image'] = implode('-',explode(' ',$val['name'])).'-'.$file->getRandomName();
+                    endif; 
+                endif;
                 if(!$this->validating->run($input,'editProduct')):
                     array_push($data,['validation' => $this->validating->getErrors()]);
                     foreach($this->validating->getErrors() as $error ):
@@ -80,12 +95,12 @@ class Product extends BaseController
                     return view('admin/product-update',$data);
                 endif;
 
-                if(!$input['image']->move(WRITEPATH . 'uploads'))
+                if(!$input['image']->move(ROOTPATH.$this->_folder,$input['image']))
                 {
                     $this->session->setFlashdata('errors', 'Failed to upload image');
                     return view('admin/product-update',$data);
                 }          
-                if($tables->insert($input)) {
+                if($tables->update($input,['id'=>$id])) {
                     $this->session->setFlashdata('success', "Successfully update data");
                     $this->session->setFlashdata('redirect', base_url().'/admin');
                 }
@@ -97,14 +112,8 @@ class Product extends BaseController
     public function delete($id)
     {
         $tables = new ProductModel();
-            if($tables->delete($input))
-            {
-                $this->session->setFlashdata('errors', 'Failed to remove data');
-                $this->session->setFlashdata('redirect', base_url().'/admin/product');
-            }          
-            if($tables->insert($input)) {
-                $this->session->setFlashdata('success', "Successfully remove data");
-                $this->session->setFlashdata('redirect', base_url().'/admin/product');
-            }
+        if(!$tables->delete($id)):            
+            $this->session->setFlashdata('errors', $tables->errors());
+        endif;      
     }
 }

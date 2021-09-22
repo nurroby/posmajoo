@@ -28,15 +28,15 @@
                     <div class="card-body">
                         <form method="POST" enctype="multipart/form-data">
                             <div class="row">
-                                <div class="form-group col-md-6 col-xs-12">
+                                <div class="form-group col-md-4 col-xs-12">
                                     <label>Name</label>
                                     <input type="text" id="name" class="form-control" name="name" value="<?= $val['name'];?>">
                                 </div>
                                 <div class="form-group col-md-4 col-xs-12">
                                     <label>Category</label>
-                                    <input type="text" id="category_id" class="form-control" name="category_id" value="<?= set_value('category_id');?>" required>
+                                    <select class="form-control select2" id="category_id" name="category_id"></select>
                                 </div>
-                                <div class="form-group col-md-6 col-xs-12">
+                                <div class="form-group col-md-4 col-xs-12">
                                     <label>Price</label>
                                     <input type="text" id="price" class="form-control" name="price" value="<?= $val['price'];?>">
                                 </div>
@@ -52,7 +52,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-md-4 col-xs-12">
-                                    <img src="" alt="Image preview" id="preview-image" class="d-none img-thumbnail">
+                                    <img src="<?= base_url('uploads/products/img/'.$val['image']);?>" alt="Image preview" id="preview-image" class="img-thumbnail">
                                 </div>
                             </div>
                             <div class="row mt-3">
@@ -111,5 +111,93 @@
             $("#submit").attr('disabled');
         }
     });
+
+    
+    function template(data) {
+        if ($(data.html).length === 0) {
+            return data.text;
+        }
+        return data.html;
+    }
+$(document).ready(function () {
+    $("#category_id").select2({
+        theme:'bootstrap4',
+        ajax: {
+            url: '<?= base_url(); ?>/api/category',
+            dataType: 'json',
+            type: 'GET',
+            processResults: function(data) {
+                let myResults = [];
+                if(data.category.length > 0) {
+                    let selects = '<?= $val['category_id']?>';
+                    $.each(data.category, function(index, item) {
+                        myResults.push({
+                            id: item.id,
+                            text: item.name.toUpperCase(),
+                            selected: (item.id === selects),
+                        });
+                        console.log(item.id,selects)
+                        console.log(typeof item.id)
+                        console.log(typeof selects)
+                        console.table('myResults',myResults)
+                    });
+                }
+                return {
+                    results: myResults
+                };
+            },
+            cache: true
+        },
+        allowClear: true,
+        templateResult: template,
+        templateSelection: template
+    }); 
+    var categorySelected = $('#category_id');
+    $.ajax({
+        type: 'GET',
+        url: '<?= base_url(); ?>/api/category'
+    }).then(function (data) {
+        let selects = '<?= $val['category_id']?>';
+        console.log('select = '+selects + ' type '+ typeof selects )
+        $.each(data.category, function(index, item) {
+                console.log('data',data.category[index])
+                console.log('item-name = '+item.name+' type '+typeof item.name)
+                console.log('item-id = '+item.id+' type '+typeof item.id)
+            if(selects===item.id)
+                categorySelected.append(new Option(data.category[index].name,data.category[index].id,true,true)).trigger('change');
+        });      
+
+        // manually trigger the `select2:select` event
+        categorySelected.trigger({
+            type: 'select2:select',
+            params: {
+                data: data
+            }
+        });
+    });
+
+    $(':input[type="submit"]').prop('disabled', true);
+    $('input[type="text"]').keyup(function() {
+        if($(this).val() !== $(this).data().initial) {
+        $(':input[type="submit"]').prop('disabled', false);
+        }
+    });
+    categorySelected.on('select2:selecting',function() {
+        if($(this).val() !== $(this).data().initial) {
+        $(':input[type="submit"]').prop('disabled', false);
+        }
+    });
+    $('.note-editable').keyup(function() {
+        if($(this).val() !== $(this).data().initial) {
+        $(':input[type="submit"]').prop('disabled', false);
+        }
+    });
+    $('input[type="file"]').change(function() {
+        if($(this).val() !== $(this).data().initial) {
+        $(':input[type="submit"]').prop('disabled', false);
+        }
+    });
+    
+});
 </script>
 <?= $this->endSection() ?>

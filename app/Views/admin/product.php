@@ -34,8 +34,8 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
+                                    <th>Category</th>
                                     <th>Price</th>
-                                    <th>Description</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -55,55 +55,6 @@
 </div>
 <!-- /.content-wrapper -->
 
-
-<div class="modal fade" id="modal-danger">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title"></h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p></p>
-            </div>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-outline-light bg-danger swalDefaultSuccess" id="proceed-delete"
-                    data-dismiss="modal">Remove</button>
-                <button type="button" class="btn btn-outline-light bg-secondary" data-dismiss="modal">Cancel</button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
-
-
-<div class="modal fade" id="modal-revive">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title"></h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p></p>
-            </div>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-outline-light bg-danger swalDefaultSuccess" id="proceed-revive"
-                    data-dismiss="modal">Modify</button>
-                <button type="button" class="btn btn-outline-light bg-secondary" data-dismiss="modal">Cancel</button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
 
 <script>
     $(document).ready(function () {
@@ -158,11 +109,11 @@
                     "orderable": true,
                 },
                 {
-                    "data": "price",
+                    "data": "category",
                     "orderable": true,
                 },
                 {
-                    "data": "category",
+                    "data": "price",
                     "orderable": true,
                 },
                 {
@@ -171,7 +122,7 @@
                         return `
                         <div class="d-flex justify-content-start">
                         <button class="btn btn-sm btn-secondary mx-1" data-toggle="tooltip" onclick="window.location.href = '<?= base_url('admin/product/edit/') ?>/${data}'" title="Edit"><i class="fas fa-edit"></i></button>&nbsp
-                        <button class="btn btn-sm btn-danger btn-delete mx-1" data-toggle="tooltip" data-tab="bundle" data-id="${data}" title="Hapus"><i class="fas fa-trash"></i></button>
+                        <button class="btn btn-sm btn-danger btn-delete mx-1" data-toggle="tooltip" data-tab="bundle" data-id="${data}" title="Delete"><i class="fas fa-trash"></i></button>
                         </div>
                         `
                     },
@@ -199,31 +150,33 @@
         $('#tb-product_wrapper div.dt-buttons button').attr('disabled', true)
 
         $(document).on('click', '.btn-delete', function () {
-            $('#modal-danger').modal('show')
-            $('#modal-danger #proceed-delete').attr('data-id', $(this).attr('data-id'))
-            $('#modal-danger #proceed-delete').attr('data-tab', $(this).attr('data-tab'))
-            let title = 'Kategori'
-            $('#modal-danger .modal-title').text('Confirmation deleting ' + title)
-            $('#modal-danger .modal-body p').text('Are you sure deleting ' + title.toLowerCase() +
-                ' ini?')
-        })
-
-
-        $(document).on('click', '.btn-reverse-delete', function () {
-            $('#modal-revive').modal('show')
-            $('#modal-revive #proceed-revive').attr('data-id', $(this).attr('data-id'))
-            $('#modal-revive #proceed-revive').attr('data-status', $(this).attr('data-status'))
-            $('#modal-revive #proceed-revive').attr('data-tab', $(this).attr('data-tab'))
-            let title = 'Kategori'
-            $('#modal-revive .modal-title').text('Confirmation reverse ' + title)
-            $('#modal-revive .modal-body p').text('Are you sure reverse ' + title
-            .toLowerCase() + ' ini?')
-        })
-
-        $('#modal-orders').on('hide.bs.modal', function () {
-            $('#modal-orders table tbody').empty()
-            $('#modal-orders .widget-user-header').empty()
-        })
+            let id = $(this).attr('data-id')
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "It will be deleted permanently!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!',
+                showLoaderOnConfirm: true,
+                preConfirm: function() {
+                    return new Promise(function(resolve) {
+                        $.ajax({
+                                url: '<?= base_url('admin/product/delete')?>/' + id,
+                                type: 'GET',
+                            })
+                            .done(function(response) {
+                                Swal.fire('Deleted!', 'Your file has been deleted.', 'success')
+                                tableBundle.ajax.reload();
+                            })
+                            .fail(function() {
+                                Swal.fire('Oops...', 'Something went wrong with ajax !', 'error')
+                            });
+                    });
+                },
+            })
+        })    
     })
 </script>
 <?= $this->endSection() ?>

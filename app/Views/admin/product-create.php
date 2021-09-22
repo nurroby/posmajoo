@@ -35,7 +35,7 @@
                                 <div class="form-group col-md-4 col-xs-12">
                                     <label>Category</label>
                                     <select class="form-control select2" id="category_id" name="category_id" value="<?= set_value('category_id');?>" required>
-                                        <option value="">Pilih Kategori</option>
+                                        <option value=""> - Select Category - </option>
                                     </select>
                                 </div>
                                 <div class="form-group col-md-4 col-xs-12">
@@ -105,12 +105,10 @@
                 URL.revokeObjectURL(output.src)
             }
     }
-    
-    $('#category_id').select2({
+    $(document).ready(function() {
+
+        $('#category_id').select2({
             minimumInputLength: 3,
-            language: {
-                inputTooShort: (arg) => `Masukkan ${arg.minimum - arg.input.length} karakter. Gunakan kata kunci yang detail.`
-            },
             ajax: {
                 url: '<?= base_url(); ?>/api/category',
                 dataType: "json",
@@ -128,8 +126,8 @@
                 processResults: function(data) {
                     let myResults;
                     myResults = [];
-                    if(data.data.length > 0) {
-                        $.each(data.data, function(index, item) {
+                    if(data.Category.length > 0) {
+                        $.each(data.Category, function(index, item) {
                             myResults.push({
                                 id: item.id,
                                 text: item.name.toUpperCase()
@@ -156,5 +154,6 @@
                 cache: false
             }
         });
+    });
 </script>
 <?= $this->endSection() ?>
