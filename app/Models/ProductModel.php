@@ -12,7 +12,27 @@ class ProductModel extends Model
     protected $returnType = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['name', 'description', 'price', 'image','deleted_at'];
+    protected $allowedFields = ['name','category_id', 'description', 'price', 'image','deleted_at'];
+
+    protected $useTimestamps = true;
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
+    protected $deletedField  = 'deleted_at';
+
+    protected $beforeInsert  = ['beforeInsert'];
+    protected $beforeUpdate  = ['beforeUpdate'];
+        
+    protected function beforeInsert(array $data)
+    {
+        $data['data']['name'] = strtoupper($data['data']['name']);
+        return $data;
+    }
+
+    protected function beforeUpdate(array $data)
+    {
+        $data['data']['name'] = strtoupper($data['data']['name']);
+        return $data;
+    }
 
     protected $column_order = array('id', 'name', 'price', 'created_at');
     protected $column_search = array('id', 'name', 'description');

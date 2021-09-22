@@ -1,14 +1,59 @@
-// Copyright 2021 Nurroby Wahyu Saputra
-// 
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// 
-//     http://www.apache.org/licenses/LICENSE-2.0
-// 
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+<?php
 
+namespace App\Models;
+
+use CodeIgniter\Model;
+
+class UserModel extends Model
+{
+    protected $table      = 'user';
+    protected $primaryKey = 'id';
+
+    protected $returnType = 'array';
+    protected $useSoftDeletes = true;
+
+    protected $allowedFields = ['name', 'email', 'password','phone','address'];
+    
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
+    protected $deletedField  = 'deleted_at';
+
+    protected $beforeInsert  = ['beforeInsert'];
+    protected $beforeUpdate  = ['beforeUpdate'];
+
+    protected function beforeInsert(array $data)
+    {
+        $data = $this->passwordHash($data);
+        return $data;
+    }
+
+    protected function beforeUpdate(array $data)
+    {
+        $data = $this->passwordHash($data);
+        return $data;
+    }
+
+    protected function passwordHash(array $data)
+    {
+        if (isset($data['data']['password'])) {
+            $data['data']['password'] = password_hash($data['data']['password'], PASSWORD_DEFAULT);
+        }
+        return $data;
+    }
+
+    public function auth(array $data)
+    {
+        $db      = \Config\Database::connect();
+        $builder = $db->table('admin');
+        $user = $builder->select('id, password')->where('email', $data['email'])->where('deleted_at', null)->get();
+        $userData = $user->getRowArray();
+        if ($userData == null) {
+            return false;
+        }
+        if (hash_equals($userData['password'], crypt($data['password'], $userData['password']))) {
+            return array('respond' => true, 'status' => 200, 'id' => $userData['id']);
+        } else {
+            return array('respond' => false, 'status' => 400, 'message' => 'Username Or Password Combination Does Not Exist', 'status_message' => 'Authorization Error');
+        }
+    }
+}
