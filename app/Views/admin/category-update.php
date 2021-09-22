@@ -44,7 +44,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-md-4 col-xs-12">
-                                    <img src="" alt="Image preview" id="preview-image" class="d-none img-thumbnail">
+                                    <img src="<?= base_url('uploads/categories/img/'.$val['image']);?>" alt="Image preview" id="preview-image" class="img-thumbnail">
                                 </div>
                             </div>
                             <div class="row mt-3">
@@ -52,7 +52,7 @@
                                     <button class="btn btn-default" onclick="window.location.href = '<?= base_url('admin/category') ?>'; return fasse;"><i class="fas fa-arrow-left"></i>&nbsp;&nbsp;Back</button>
                                 </div>
                                 <div class="col-md-6 col-xs-12 text-right">
-                                    <button id="submit" class="btn btn-success btn-disabled" type="submit" disabled><i class="fas fa-save"></i>&nbsp;&nbsp;Save</button>
+                                    <button id="submit" class="btn btn-success" type="submit" disabled><i class="fas fa-save"></i>&nbsp;&nbsp;Save</button>
                                 </div>
                             </div>
                         </form>
@@ -95,13 +95,24 @@
                 URL.revokeObjectURL(output.src)
             }
     }
-    $("#name").keyup(function() {
-        let check = $(this).val() == $(this).data().initial;
-        if(!check){ 
-            $("#submit").removeAttr('disabled');
-        }else{
-            $("#submit").attr('disabled');
-        }
+
+    $(document).ready(function() {
+        $(':input[type="submit"]').prop('disabled', true);
+        $('input[type="text"]').keyup(function() {
+            if($(this).val() !== $(this).data().initial) {
+            $(':input[type="submit"]').prop('disabled', false);
+            }
+        });
+        $('.note-editable').keyup(function() {
+            if($(this).val() !== $(this).data().initial) {
+            $(':input[type="submit"]').prop('disabled', false);
+            }
+        });
+        $('input[type="file"]').change(function() {
+            if($(this).val() !== $(this).data().initial) {
+            $(':input[type="submit"]').prop('disabled', false);
+            }
+        });
     });
 </script>
 <?= $this->endSection() ?>
