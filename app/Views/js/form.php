@@ -23,8 +23,17 @@
         $("input[readonly]").css("pointer-events", "none");
         $("textarea[readonly]").css("pointer-events", "none");
     })
-    $('#summernote').summernote();
-    $('.select2').select2({
+    $('#summernote').summernote({
+        toolbar:[            
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['font', ['strikethrough', 'superscript', 'subscript']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['height', ['height']]
+        ]
+    });
+    $('select').select2({
         theme: 'bootstrap4'
     });
     $(".date").datetimepicker();
