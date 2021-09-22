@@ -22,7 +22,7 @@ class Product extends Migration
 			],
 			'name'  => [
 				'type'           => 'VARCHAR',
-				'constraint'     => '20'
+				'constraint'     => '50'
 			],
 			'price'  => [
 				'type'           => 'BIGINT',
