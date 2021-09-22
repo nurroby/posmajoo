@@ -29,20 +29,8 @@ class Order extends Migration
 				'constraint'     => ['requested','waited','processed','finished','rejected','canceled'],
 				'default'        => 'requested',
 			],
-			'created_at'  => [
-				'type'           => 'TIMESTAMP',
-				'default'           => [
-                    'value'             => 'CURRENT_TIMESTAMP',
-                    'string'            => false,
-                ],
-			],
-			'updated_at'  => [
-				'type'           => 'TIMESTAMP',
-                'default'           =>[
-                    'value'             =>'CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP',
-                    'string'            => false,
-                ]
-			],
+			'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
+			'updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP',
 			'deleted_at'  => [
 				'type'           => 'TIMESTAMP',
 				'null'           => true,

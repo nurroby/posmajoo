@@ -36,20 +36,8 @@ class Admin extends Migration
 				'type'           => 'VARCHAR',
 				'constraint'     => '50',
 			],
-			'created_at'  => [
-				'type'           => 'TIMESTAMP',
-				'default'           => [
-                    'value'             => 'CURRENT_TIMESTAMP',
-                    'string'            => false,
-                ],
-			],
-			'updated_at'  => [
-				'type'           => 'TIMESTAMP',
-                'default'           =>[
-                    'value'             =>'CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP',
-                    'string'            => false,
-                ]
-			],
+			'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
+			'updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP',
 			'deleted_at'  => [
 				'type'           => 'TIMESTAMP',
 				'null'           => true,
@@ -57,7 +45,7 @@ class Admin extends Migration
 		]);
         $this->forge->addPrimaryKey('id');
         $this->forge->addUniqueKey(['username', 'email','phone']);
-		$this->forge->createTable('admin', TRUE);
+		$this->forge->createTable('admin',TRUE);
     }
 
     public function down()
