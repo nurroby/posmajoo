@@ -4,13 +4,10 @@
 
 ### how to use
 
-- `> composer require`
-- `> php spark db:create posmajoo`
 - change emv.example to .env
-- `> php spark migrate`
-- `> php spark db:seed DataSeeder`
-- `> php spark serve`
-- admin @ /admin [admin:password]
+- `> composer start`
+- localhost:8080/ 
+- localhost:8080/admin [admin:password]
 
 ### Techstack
 
