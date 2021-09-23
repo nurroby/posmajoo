@@ -27,7 +27,7 @@ ___
 - [x] Add admin Panel
 - [x] Add maintenance notif for several feature
 - [x] Connecting Product data from admin to Landing
-- [ ] Add migration
+- [x] Add migration
 - [ ] Detail Page on Landing Page
 - [ ] Add master User
 - [ ] Add redirect to user login when click buy button
