@@ -8,6 +8,7 @@
 - `> php spark db:create posmajoo`
 - change emv.example to .env
 - `> php spark migrate`
+- `> php spark db:seed DataSeeder`
 - `> php spark serve`
 - admin @ /admin [admin:password]
 
