@@ -31,6 +31,14 @@
         }
     },
     "scripts": {
+        "start":[
+            "composer install",
+            "php spark db:create posmajoo",
+            "php spark migrate:rollback",
+            "php spark migrate",
+            "php spark db:seed DataSeeder",
+            "php spark serve"
+        ],
         "test": "phpunit"
     },
     "support": {
