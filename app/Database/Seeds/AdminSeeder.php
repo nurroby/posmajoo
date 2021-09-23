@@ -14,7 +14,7 @@ class AdminSeeder extends Seeder
         // insert model w/ value
         $model->insert([
             'username'  => 'admin',
-            'password'  => '$2y$10$Dxn/sfyga8QqaoWEeDr1eOfMRp3FA267C944rs6L6522V22m6IHSS',
+            'password'  => 'password',
             'name'      => 'admin',
             'email'     => 'admin@test.com',
             'phone'     => '081000000000',
