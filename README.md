@@ -21,11 +21,16 @@ ___
 
 #### todo release 0.1.0:
 
-- [x] Add admin Panel
-- [x] Add maintenance notif for several feature
-- [x] Connecting Product data from admin to Landing
-- [x] Add migration
-- [ ] Detail Page on Landing Page
-- [ ] Add master User
-- [ ] Add redirect to user login when click buy button
-- [ ] Add Registration and login page for user
+- [x] admin Panel
+- [x] maintenance notif
+- [x] Master Category
+- [x] Master Product
+- [x] Integration Category & Product with Landing
+- [x] Migration
+- [ ] Cart
+- [ ] Master User
+- [ ] Register Login User
+- [ ] User Panel
+- [ ] Checkout
+- [ ] Master Order
+- [ ] Integration Order with User Panel
