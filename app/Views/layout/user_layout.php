@@ -9,10 +9,8 @@
     <link rel="shortcut icon" href="https://majoo.id/favicon.png" />
     <?= view('css/base_user'); ?>
     <style>
-        .majoo-bg {
-            background-image: linear-gradient(135deg, #e8f1c2, #b6e4e1);
-        }
-        .rounded-full{border-radius:50em;}
+        .majoo-bg { background-image: linear-gradient(135deg, #e8f1c2, #b6e4e1) }
+        .dropdown-item:active{background:none;color:#333}
     </style>
 </head>
 
@@ -33,7 +31,8 @@
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a href="<?= base_url();?>/home" class="nav-brand">
-                                <img src="https://majoo.id/assets/img/main-logo.png" alt="Majoo Teknologi Indonesia" class="brand-image">
+                                <img src="https://majoo.id/assets/img/main-logo.png" alt="Majoo Teknologi Indonesia"
+                                    class="brand-image">
                             </a>
                         </li>
                     </ul>
@@ -48,11 +47,11 @@
                         <a href="<?= base_url();?>/register" class="nav-link">Register</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link btn btn-md btn-warning pulse mr-4" style="border-radius:50em"
-                            onclick="maintenance();" href="#" role="button">
-                            <span class="badge badge-danger">3</span>
-                            <i class="fas fa-shopping-cart mr-2"></i> cart
+                        <a class="nav-link" data-toggle="dropdown" href="#" role="button">
+                            <span class="badge badge-warning rounded-circle elevation-1 total-count d-none"></span>
+                            <i class="fas fa-shopping-cart"></i>
                         </a>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right show-cart"></div>
                     </li>
                 </ul>
             </div>
